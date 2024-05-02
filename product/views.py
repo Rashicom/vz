@@ -7,3 +7,13 @@ class Test(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, 'index.html')
+    
+
+class ProductDetails(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "product-detail.html")
+    
+
+class ContactUs(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "contact.html")
