@@ -14,6 +14,9 @@ class Products(BaseModel):
     name = models.CharField(max_length=150)
     description = models.TextField()
 
+    def __str__(self):
+        return self.name
+
 
 # multiple images for product, Global feature
 class ProductImages(BaseModel):
@@ -34,6 +37,8 @@ class ProductBottles(BaseModel):
             return self.price - (self.price * self.discount_percent) / 100
         return self.price
 
+    def __str__(self):
+        return self.product.name
 
 # multiple bottle selles for discounted prices
 class ComboProducts(BaseModel):
@@ -41,7 +46,7 @@ class ComboProducts(BaseModel):
     name = models.CharField(max_length=150)
     discription = models.TextField(null=True, blank=True)
     discounted_price = models.IntegerField()
-    free_bottles = models.ManyToManyField(ProductBottles, related_name="included_free_bottles_combo")
+    free_bottles = models.ManyToManyField(ProductBottles, related_name="included_free_bottles_combo", blank=True)
 
     # sub total price fo bottles without bottle discounts
     @property

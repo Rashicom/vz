@@ -270,11 +270,70 @@
     [ Show modal1 ]*/
     $('.js-show-modal1').on('click',function(e){
         e.preventDefault();
+
+        var button = $(this);
+        var modal = $('.js-modal1');
+        var name = button.data('name');
+        var images = JSON.parse(JSON.stringify(button.data('images')));
+        var description = button.data('description');
+        var bottles = JSON.parse(JSON.stringify(button.data('bottles')));
+        
+        // remove existing images
+        modal.find('.slick3').empty();
+
+        // populate product details
+        modal.find('.js-name-detail').text(name);
+        modal.find('.js-description-detail').text(description);
+        
+        // update bottles in options
+        for (var i = 0; i < bottles.length; i++) {
+            var bottle = bottles[i];
+            var option = $('<option></option>').text(bottle.bottle_size_ml + ' ML Bottle').data("size",bottle.bottle_size_ml).data("price",bottle.bottle_price);
+            modal.find('.js-size-select').append(option);
+        }
+
+        // defaultly set the first bottle information
+        var first_bottle = bottles[0]
+        $('.bottle-size-ml').text(first_bottle.bottle_size_ml + ' ML');
+        $('.bottle-price').text('₹ ' + first_bottle.bottle_price);
+
+        // update images
+        for (var i = 0; i < images.length; i++) {
+            var image = images[i];
+            var itemSlick3 = $('<div class="item-slick3" data-thumb="'+image+'"></div>');
+            var wrapPicW = $('<div class="wrap-pic-w pos-relative"></div>');
+            var img = $('<img src="' + image + '" alt="IMG-PRODUCT">');
+            var a = $('<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="' + image + '"><i class="fa fa-expand"></i></a>');
+
+            wrapPicW.append(img);
+            wrapPicW.append(a);
+            itemSlick3.append(wrapPicW);
+            
+            // Append the item to the slick3 element
+            modal.find('.slick3').append(itemSlick3);
+            
+            // side image list
+            // var ua = $('<img src=" ' + image + ' "/><div class="slick3-dot-overlay"></div>')
+            // var u = $(this).find('.wrap-slick3-dots').append(ua)
+
+        }
+
         $('.js-modal1').addClass('show-modal1');
     });
 
     $('.js-hide-modal1').on('click',function(){
         $('.js-modal1').removeClass('show-modal1');
+
+    });
+
+    // bottle size selection change in header details
+    $('.js-size-select').on('change', function() {
+        var selectedSize = $(this).find('option:selected').data('size');
+        var selectedPrice = $(this).find('option:selected').data('price');
+
+        $('.bottle-size-ml').text(selectedSize + ' ML');
+        $('.bottle-price').text('₹ ' + selectedPrice);
+
     });
 
 

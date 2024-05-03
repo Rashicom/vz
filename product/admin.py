@@ -7,8 +7,9 @@ from .models import Products, ProductImages, ProductBottles,ComboProducts, Conta
 class ProductsAdmin(admin.ModelAdmin):
     list_display = (
         "name",
-        "description"
+        "description",   
     )
+
 
 @admin.register(ProductImages)
 class ProductImagesAdmin(admin.ModelAdmin):
@@ -34,4 +35,5 @@ class ComboProductsAdmin(admin.ModelAdmin):
         "discription",
         "discounted_price",
         "bottle_sub_total_price",
+        "bottle_sub_discounted_price",
     )
