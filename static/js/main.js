@@ -278,8 +278,9 @@
         var description = button.data('description');
         var bottles = JSON.parse(JSON.stringify(button.data('bottles')));
         
-        // remove existing images
+        // remove existing data
         modal.find('.slick3').empty();
+        modal.find('.js-size-select').empty();
 
         // populate product details
         modal.find('.js-name-detail').text(name);
