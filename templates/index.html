@@ -651,6 +651,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 							</p>
 							
 							<!--  -->
+							<form method="get" action="/place-order">
 							<div class="p-t-33">
 								<div class="flex-w flex-r-m p-b-10">
 									<div class="size-203 flex-c-m respon6">
@@ -658,8 +659,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 									</div>
 									
 									<div class="size-204 respon6-next">
+										<div class="hiddendiv">
+											<!-- hidden fields -->
+
+										</div>
+
 										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2 js-size-select" name="time">
+											<select class="js-select2 js-size-select" name="bottle_pk">
 													{% comment %} Option listed by js {% endcomment %}
 
 											</select>
@@ -670,25 +676,29 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
 								<div class="flex-w flex-r-m p-b-10">
+								
 									<div class="size-204 flex-w flex-m respon6-next">
-										<div class="wrap-num-product flex-w m-r-20 m-tb-10">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
-											</div>
-
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
-
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
-											</div>
+										
+										<div class="bor8 bg0 m-b-30">
+											<textarea class="stext-111 cl2 plh3 size-130 p-lr-28 p-tb-25" name="address" placeholder="Full address"></textarea>
+										</div>
+										
+										<div class="bor8 bg0 m-b-22">
+											<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="Pin code">
+										</div>
+										
+										<div class="bor8 bg0 m-b-22">
+											<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="contact_number" placeholder="Contact number">
 										</div>
 
-										<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+										<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04" type="submit">
 											PLACE ORDER
 										</button>
 									</div>
 								</div>	
 							</div>
+							</form>
+							
 
 							<!--  -->
 							<div class="flex-w flex-m p-l-100 p-t-40 respon7">
@@ -793,27 +803,20 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 		$('.js-addcart-detail').each(function(){
 			var nameProduct = "Thank You !";
-			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').text();
-    		var sizeProduct = $(this).parent().parent().parent().parent().find('.bottle-size-ml').text();
-    		var priceProduct = $(this).parent().parent().parent().parent().find('.bottle-price').text();
 			$(this).on('click', function(){
 				swal(nameProduct, "Click ok For Continue", "success").then(function() {
 					console.log("Success")
-					console.log(nameProduct)
-					console.log(sizeProduct)
-					console.log(priceProduct)
 
-					// redirect to watsapp
-					var message = "Hi, I would like to place an order for";
+					var product_pk = document.getElementById("bottle_size").value;
+					var address = document.getElementById("address").value;
+					var pin_code = document.getElementById("postcode").value;
+					var contact_number = document.getElementById("contact_number").value;
 
-            		// WhatsApp number
-            		var phoneNumber = '7736721813'; // Replace this with your WhatsApp number
-
-            		// Construct the WhatsApp URL
-            		var url = 'https://wa.me/' + phoneNumber + '?text=' + encodeURIComponent(message);
+            		// Construct  URLmessae
+            		var url = 'https://wa.me/' + '?product_pk=' + product_pk + '&address=' + address + '&pin_code=' + pin_code + '&contact_number=' + contact_number;
 
             		// Open WhatsApp in a new tab
-            		window.open(url, '_blank');
+            		// window.open(url, '_blank');
 				})
 			});
 		});

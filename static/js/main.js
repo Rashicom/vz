@@ -281,15 +281,23 @@
         // remove existing data
         modal.find('.slick3').empty();
         modal.find('.js-size-select').empty();
+        modal.find('.hiddendiv').empty();
 
         // populate product details
         modal.find('.js-name-detail').text(name);
         modal.find('.js-description-detail').text(description);
+
+        // add hidden input fields for submission
+        var hiddenInput = document.createElement("input");
+        hiddenInput.setAttribute("type", "hidden");
+        hiddenInput.setAttribute("name", "product_name");
+        hiddenInput.setAttribute("value", name);
+        modal.find('.hiddendiv').append(hiddenInput)
         
         // update bottles in options
         for (var i = 0; i < bottles.length; i++) {
             var bottle = bottles[i];
-            var option = $('<option></option>').text(bottle.bottle_size_ml + ' ML Bottle').data("size",bottle.bottle_size_ml).data("price",bottle.bottle_price);
+            var option = $('<option value="'+ bottle.pk +'"></option>').text(bottle.bottle_size_ml + ' ML Bottle').data("size",bottle.bottle_size_ml).data("price",bottle.bottle_price);
             modal.find('.js-size-select').append(option);
         }
 
