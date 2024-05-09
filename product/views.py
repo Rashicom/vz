@@ -4,6 +4,7 @@ from .models import ProductBottles,Products
 import json
 from datetime import datetime
 import urllib.parse
+from django.db.models import Q
 # Create your views here.
 
 
@@ -86,6 +87,28 @@ class ComboProducts(View):
                 } for bottle in product.bottles.all()])
             })
         return render(request, 'index.html', {"products":products})
+    
+
+class SearchProduct(View):
+
+    def get(self, request, *args, **kwargs):
+        search_key = request.GET.get("search_key")
+        lookup = Q(name__icontains=search_key) | Q(description__icontains=search_key)
+        products = []
+        for product in Products.objects.filter(lookup):
+            products.append({
+                "name":product.name,
+                "description":product.description,
+                "first_image":product.images.first().image.url,
+                "image_urls":json.dumps([img.image.url for img in product.images.all()]),
+                "bottles":json.dumps([{
+                    "pk":str(bottle.pk),
+                    "bottle_size_ml":bottle.bottle_size_ml,
+                    "bottle_price":bottle.price,
+                    "price_after_discount":bottle.price_after_discount
+                } for bottle in product.bottles.all()])
+            })
+        return render(request, 'index.html', {"products":products})
 
 
 class PlaceOrder(View):
@@ -98,7 +121,7 @@ class PlaceOrder(View):
         address = request.GET.get('address')
         pin_code = request.GET.get('postcode')
         contact_number = request.GET.get('contact_number')
-        
+
         message = f"I would like to order a perfume bottle of {bottle_name} {bottle_size} ML priced at {bottle_price}₹ to be delivered to the following Address :\n\n{address} Postal Code: {pin_code}\nContact Number: {contact_number}"
         encoded_message = urllib.parse.quote(message)
         watsapp_url = f"https://wa.me/7736721813?text={encoded_message}"
