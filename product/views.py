@@ -5,6 +5,7 @@ import json
 from datetime import datetime
 import urllib.parse
 from django.db.models import Q
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -130,6 +131,28 @@ class PlaceOrder(View):
     
 
 
+# Contact us
 class ContactUs(View):
     def get(self, request, *args, **kwargs):
         return render(request, "contact.html")
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get("email")
+        message = request.POST.get("message")
+        print("email", email)
+        print("message", message)
+        message = message + " " + "From:" + str(email)
+        try:
+            send_mail(
+                "Vz Enquiry",
+                message,
+                "rashid.kp484@gmail.com",
+                ["vzperfumeshub555@gmail.com"],
+                fail_silently=False,
+            )
+        except Exception as e:
+            print(e)
+            # TODO: log exception
+
+        return render(request, "contact.html")
+    
