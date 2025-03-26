@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-pi$0knlb)#j@a40r%lcf&374hm@8tkt36e+c@t6)*fodqb8ps6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['51.20.183.66','www.vzperfumeshub.com','vzperfumeshub.com']
+ALLOWED_HOSTS = ['13.233.16.191','www.vzperfumeshub.com','vzperfumeshub.com','*']
 
 
 # Application definition
@@ -146,3 +146,10 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "rashid.kp484@gmail.com"
 EMAIL_HOST_PASSWORD = "nrsz ngpq wrmf csbm"
+
+
+
+
+
+
+
